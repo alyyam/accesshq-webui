@@ -1,20 +1,23 @@
 package com.acsesshq.model;
 
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class FormModel {
 
-    WebDriver driver ;
+    private WebDriver driver;
 
     public FormModel(WebDriver driver) {
         this.driver = driver;
     }
 
     public void clickForm(String btnName){
-        driver.findElement(By.cssSelector("[aria-label=forms].v-btn")).click();
+        driver.findElement(By.cssSelector(btnName)).click();
     }
 
 
@@ -42,4 +45,15 @@ public class FormModel {
             }
         }
     }
+
+    public void assertPopup(String popName, String msgContent){
+
+        var popup =  driver.findElement(By.className(popName));
+        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(popup));
+
+        Assertions.assertEquals(msgContent,popup.getText());
+
+    }
+
+
 }
